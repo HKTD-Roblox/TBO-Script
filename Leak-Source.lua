@@ -1,5 +1,6 @@
 local hwid = "unknown"
 pcall(function() if gethwid then hwid = gethwid() else hwid = game:GetService("RbxAnalyticsService"):GetClientId() end end)
+d
 
 local url = "https://peeky.pythonanywhere.com/DaHoodGui" .. game:GetService("HttpService"):UrlEncode(hwid) .. "&_cb=" .. tostring(os.clock())
 
