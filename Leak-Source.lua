@@ -1,31 +1,28 @@
-local httpService = game:GetService("HttpService")
-local hwid = "unknown"
-
-pcall(function() 
-    if gethwid then 
-        hwid = gethwid() 
-    else 
-        hwid = game:GetService("RbxAnalyticsService"):GetClientId() 
-    end 
-end)
-
-local url = "https://peeky.pythonanywhere.com/DaHoodGui" .. httpService:UrlEncode(hwid) .. "&_cb=" .. tostring(os.clock())
-
+local url = "https://peeky.pythonanywhere.com/DaHoodGui"
 local success, result = pcall(function()
-    return httpService:GetAsync(url, true)
+    return game:HttpGet(url)
 end)
 
-if success and writefile then
-    writefile("TBO-Script.lua", result)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "TBO Script",
-        Text = "Saved successfully to TBO-Script.lua!",
-        Duration = 5
-    })
+if success and result and #result > 0 then
+    if writefile then
+        writefile("TBO-Script.lua", result)
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "TBO Script",
+            Text = "Saved successfully to TBO-Script.lua!",
+            Duration = 5
+        })
+    else
+        setclipboard(result)
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "TBO Script",
+            Text = "Successfully copied to Clipboard!",
+            Duration = 5
+        })
+    end
 else
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "TBO Script",
-        Text = "Failed to fetch or save script from server!",
+        Text = "Failed to download!",
         Duration = 5
     })
 end
