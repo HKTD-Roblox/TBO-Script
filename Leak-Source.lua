@@ -1,4 +1,4 @@
-local url = "https://peeky.pythonanywhere.com/DaHoodGui"
+local url = "https://peeky.pythonanywhere.com/jjs"
 local success, result = pcall(function()
     return game:HttpGet(url)
 end)
